@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TelemetryPortal_MVC.Models;  // Adjust to your actual namespace
-using TelemetryPortal_MVC;  
+using TelemetryPortal_MVC.Models;
+using TelemetryPortal_MVC;
 
-namespace YourNamespace.Controllers
+namespace TelemetryPortal_MVC.Controllers
 {
     public class ProjectController : Controller
     {

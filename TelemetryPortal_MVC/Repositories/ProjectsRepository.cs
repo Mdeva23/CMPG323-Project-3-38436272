@@ -2,7 +2,6 @@
 using System.Linq;
 using TelemetryPortal_MVC.Data;
 using TelemetryPortal_MVC.Models;
-using TelemetryPortal_MVC;
 
 public class ProjectsRepository
 {
