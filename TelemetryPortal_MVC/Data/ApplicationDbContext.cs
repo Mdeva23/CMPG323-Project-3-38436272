@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TelemetryPortal_MVC.Models;
 
 namespace TelemetryPortal_MVC.Data
 {
@@ -9,5 +10,8 @@ namespace TelemetryPortal_MVC.Data
             : base(options)
         {
         }
+
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Project> Projects { get; set; }
     }
 }
