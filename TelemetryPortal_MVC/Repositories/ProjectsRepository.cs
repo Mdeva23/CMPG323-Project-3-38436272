@@ -2,12 +2,13 @@
 using System.Linq;
 using TelemetryPortal_MVC.Data;
 using TelemetryPortal_MVC.Models;
+using TelemetryPortal_MVC;
 
 public class ProjectsRepository
 {
-    private readonly ApplicationDbContext _context;
+    private readonly TechtrendsContext _context;
 
-    public ProjectsRepository(ApplicationDbContext context)
+    public ProjectsRepository(TechtrendsContext context)
     {
         _context = context;
     }

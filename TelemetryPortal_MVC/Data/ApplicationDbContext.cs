@@ -11,7 +11,5 @@ namespace TelemetryPortal_MVC.Data
         {
         }
 
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Project> Projects { get; set; }
     }
 }

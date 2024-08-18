@@ -5,9 +5,9 @@ using TelemetryPortal_MVC.Models;
 
 public class ClientsRepository
 {
-    private readonly ApplicationDbContext _context;
+    private readonly TechtrendsContext _context;
 
-    public ClientsRepository(ApplicationDbContext context)
+    public ClientsRepository(TechtrendsContext context)
     {
         _context = context;
     }
