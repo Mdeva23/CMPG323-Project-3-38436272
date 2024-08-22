@@ -1,46 +1,57 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TelemetryPortal_MVC.Data;
 using TelemetryPortal_MVC.Models;
 
-public class ProjectsRepository
+namespace TelemetryPortal_MVC.Repositories
 {
-    private readonly TechtrendsContext _context;
-
-    public ProjectsRepository(TechtrendsContext context)
+    public class ProjectsRepository
     {
-        _context = context;
-    }
+        private readonly TechtrendsContext _context;
 
-    public IEnumerable<Project> GetAllProjects()
-    {
-        return _context.Projects.ToList();
-    }
-
-    public Project GetProjectById(int id)
-    {
-        return _context.Projects.Find(id);
-    }
-
-    public void AddProject(Project project)
-    {
-        _context.Projects.Add(project);
-        _context.SaveChanges();
-    }
-
-    public void UpdateProject(Project project)
-    {
-        _context.Projects.Update(project);
-        _context.SaveChanges();
-    }
-
-    public void DeleteProject(int id)
-    {
-        var project = _context.Projects.Find(id);
-        if (project != null)
+        public ProjectsRepository(TechtrendsContext context)
         {
-            _context.Projects.Remove(project);
-            _context.SaveChanges();
+            _context = context;
+        }
+
+        public async Task<List<Project>> GetAllProjectsAsync()
+        {
+            return await _context.Projects.ToListAsync();
+        }
+
+        public async Task<Project> GetProjectByIdAsync(Guid id)
+        {
+            return await _context.Projects.FirstOrDefaultAsync(m => m.ProjectId == id);
+        }
+
+        public async Task AddProjectAsync(Project project)
+        {
+            _context.Add(project);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateProjectAsync(Project project)
+        {
+            _context.Update(project);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteProjectAsync(Guid id)
+        {
+            var project = await _context.Projects.FindAsync(id);
+            if (project != null)
+            {
+                _context.Projects.Remove(project);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public bool ProjectExists(Guid id)
+        {
+            return _context.Projects.Any(e => e.ProjectId == id);
         }
     }
 }

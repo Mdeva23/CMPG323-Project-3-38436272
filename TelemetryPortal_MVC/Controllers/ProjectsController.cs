@@ -1,55 +1,76 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TelemetryPortal_MVC.Models;
-using TelemetryPortal_MVC;
+using TelemetryPortal_MVC.Repositories;
 
 namespace TelemetryPortal_MVC.Controllers
 {
-    public class ProjectController : Controller
+    public class ProjectsController : Controller
     {
         private readonly ProjectsRepository _projectRepository;
 
-        public ProjectController(ProjectsRepository projectRepository)
+        public ProjectsController(ProjectsRepository projectRepository)
         {
             _projectRepository = projectRepository;
         }
 
-        public IActionResult Index()
+        // GET: Projects
+        public async Task<IActionResult> Index()
         {
-            var projects = _projectRepository.GetAllProjects();
+            var projects = await _projectRepository.GetAllProjectsAsync();
             return View(projects);
         }
 
-        public IActionResult Details(int id)
+        // GET: Projects/Details/5
+        public async Task<IActionResult> Details(Guid? id)
         {
-            var project = _projectRepository.GetProjectById(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var project = await _projectRepository.GetProjectByIdAsync(id.Value);
             if (project == null)
             {
                 return NotFound();
             }
+
             return View(project);
         }
 
-        [HttpGet]
+        // GET: Projects/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        // POST: Projects/Create
         [HttpPost]
-        public IActionResult Create(Project project)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ProjectId,ProjectName,ProjectDescription,ProjectCreationDate,ProjectStatus,ClientId")] Project project)
         {
             if (ModelState.IsValid)
             {
-                _projectRepository.AddProject(project);
+                project.ProjectId = Guid.NewGuid();
+                await _projectRepository.AddProjectAsync(project);
                 return RedirectToAction(nameof(Index));
             }
             return View(project);
         }
 
-        [HttpGet]
-        public IActionResult Edit(int id)
+        // GET: Projects/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            var project = _projectRepository.GetProjectById(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var project = await _projectRepository.GetProjectByIdAsync(id.Value);
             if (project == null)
             {
                 return NotFound();
@@ -57,20 +78,61 @@ namespace TelemetryPortal_MVC.Controllers
             return View(project);
         }
 
+        // POST: Projects/Edit/5
         [HttpPost]
-        public IActionResult Edit(Project project)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("ProjectId,ProjectName,ProjectDescription,ProjectCreationDate,ProjectStatus,ClientId")] Project project)
         {
+            if (id != project.ProjectId)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                _projectRepository.UpdateProject(project);
+                try
+                {
+                    await _projectRepository.UpdateProjectAsync(project);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_projectRepository.ProjectExists(project.ProjectId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(project);
         }
 
-        public IActionResult Delete(int id)
+        // GET: Projects/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            _projectRepository.DeleteProject(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var project = await _projectRepository.GetProjectByIdAsync(id.Value);
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            return View(project);
+        }
+
+        // POST: Projects/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            await _projectRepository.DeleteProjectAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

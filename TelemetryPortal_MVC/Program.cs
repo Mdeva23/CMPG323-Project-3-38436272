@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TelemetryPortal_MVC;
 using TelemetryPortal_MVC.Data;
+using TelemetryPortal_MVC.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

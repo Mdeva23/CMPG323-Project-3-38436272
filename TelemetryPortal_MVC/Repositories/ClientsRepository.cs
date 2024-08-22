@@ -1,46 +1,57 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TelemetryPortal_MVC.Data;
 using TelemetryPortal_MVC.Models;
 
-public class ClientsRepository
+namespace TelemetryPortal_MVC.Repositories
 {
-    private readonly TechtrendsContext _context;
-
-    public ClientsRepository(TechtrendsContext context)
+    public class ClientsRepository
     {
-        _context = context;
-    }
+        private readonly TechtrendsContext _context;
 
-    public IEnumerable<Client> GetAllClients()
-    {
-        return _context.Clients.ToList();
-    }
-
-    public Client GetClientById(int id)
-    {
-        return _context.Clients.Find(id);
-    }
-
-    public void AddClient(Client client)
-    {
-        _context.Clients.Add(client);
-        _context.SaveChanges();
-    }
-
-    public void UpdateClient(Client client)
-    {
-        _context.Clients.Update(client);
-        _context.SaveChanges();
-    }
-
-    public void DeleteClient(int id)
-    {
-        var client = _context.Clients.Find(id);
-        if (client != null)
+        public ClientsRepository(TechtrendsContext context)
         {
-            _context.Clients.Remove(client);
-            _context.SaveChanges();
+            _context = context;
+        }
+
+        public async Task<List<Client>> GetAllClientsAsync()
+        {
+            return await _context.Clients.ToListAsync();
+        }
+
+        public async Task<Client> GetClientByIdAsync(Guid id)
+        {
+            return await _context.Clients.FirstOrDefaultAsync(m => m.ClientId == id);
+        }
+
+        public async Task AddClientAsync(Client client)
+        {
+            _context.Add(client);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateClientAsync(Client client)
+        {
+            _context.Update(client);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteClientAsync(Guid id)
+        {
+            var client = await _context.Clients.FindAsync(id);
+            if (client != null)
+            {
+                _context.Clients.Remove(client);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public bool ClientExists(Guid id)
+        {
+            return _context.Clients.Any(e => e.ClientId == id);
         }
     }
 }

@@ -1,55 +1,76 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TelemetryPortal_MVC.Models;
-using TelemetryPortal_MVC;
+using TelemetryPortal_MVC.Repositories;
 
-namespace YourNamespace.Controllers
+namespace TelemetryPortal_MVC.Controllers
 {
-    public class ClientController : Controller
+    public class ClientsController : Controller
     {
         private readonly ClientsRepository _clientRepository;
 
-        public ClientController(ClientsRepository clientRepository)
+        public ClientsController(ClientsRepository clientRepository)
         {
             _clientRepository = clientRepository;
         }
 
-        public IActionResult Index()
+        // GET: Clients
+        public async Task<IActionResult> Index()
         {
-            var clients = _clientRepository.GetAllClients();
+            var clients = await _clientRepository.GetAllClientsAsync();
             return View(clients);
         }
 
-        public IActionResult Details(int id)
+        // GET: Clients/Details/5
+        public async Task<IActionResult> Details(Guid? id)
         {
-            var client = _clientRepository.GetClientById(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var client = await _clientRepository.GetClientByIdAsync(id.Value);
             if (client == null)
             {
                 return NotFound();
             }
+
             return View(client);
         }
 
-        [HttpGet]
+        // GET: Clients/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        // POST: Clients/Create
         [HttpPost]
-        public IActionResult Create(Client client)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ClientId,ClientName,ClientEmail,ClientPhone,ClientAddress")] Client client)
         {
             if (ModelState.IsValid)
             {
-                _clientRepository.AddClient(client);
+                client.ClientId = Guid.NewGuid();
+                await _clientRepository.AddClientAsync(client);
                 return RedirectToAction(nameof(Index));
             }
             return View(client);
         }
 
-        [HttpGet]
-        public IActionResult Edit(int id)
+        // GET: Clients/Edit/5
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            var client = _clientRepository.GetClientById(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var client = await _clientRepository.GetClientByIdAsync(id.Value);
             if (client == null)
             {
                 return NotFound();
@@ -57,20 +78,61 @@ namespace YourNamespace.Controllers
             return View(client);
         }
 
+        // POST: Clients/Edit/5
         [HttpPost]
-        public IActionResult Edit(Client client)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("ClientId,ClientName,ClientEmail,ClientPhone,ClientAddress")] Client client)
         {
+            if (id != client.ClientId)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                _clientRepository.UpdateClient(client);
+                try
+                {
+                    await _clientRepository.UpdateClientAsync(client);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_clientRepository.ClientExists(client.ClientId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(client);
         }
 
-        public IActionResult Delete(int id)
+        // GET: Clients/Delete/5
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            _clientRepository.DeleteClient(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var client = await _clientRepository.GetClientByIdAsync(id.Value);
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            return View(client);
+        }
+
+        // POST: Clients/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            await _clientRepository.DeleteClientAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }
