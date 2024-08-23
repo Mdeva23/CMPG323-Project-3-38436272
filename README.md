@@ -1,4 +1,4 @@
-# CMPG 323 Project 3 - Student Number
+# CMPG 323 Project 3 - 38436272
 
 # Overview
 This project is part of the CMPG 323 course and focuses on enhancing an existing web application by implementing architectural patterns, coding principles, and design patterns. The application manages CRUD (Create, Read, Update, Delete) functionality for project and client data.
@@ -60,3 +60,23 @@ POST /Client/Create: Creates a new client.
 
 
 # References:
+
+CMPG323-IT Developments .2023. 31 August CMPG323 weekly virtual class Patterns Introduction. 31 August CMPG323 weekly virtual class Patterns introduction (youtube.com) Date of Access: 15 Aug. 2024.
+
+CMPG323-IT Developments .2023. 5 September Patterns background + Web app demo. 5 September Patterns background +Web app demo (youtube.com) Date of Access: 15 Aug. 2024.
+
+CMPG323-IT Developments .2023. 6 September CMPG323 weekly virtual class Patterns demo. 6 September CMPG323 weekly virtual class Patterns demo (youtube.com) Date of Access: 15 Aug. 2024.
+
+Microsoft. 2023. ASP.NET MVC Overview.  ASP.NET MVC Overview | Microsoft Learn Date of Access: 18 Aug. 2024.
+
+Muller, J. 2024. 03A Introduction to Patterns, 10 July 2024. https://efundi.nwu.ac.za/access/content/group/4493dc23-83c1-4f78-aaa6-89a19cd28d5f/Slides/03A%20Introduction%20to%20Patterns.pptx Date of Access: 17 Aug. 2024.
+
+Muller, J. 2024. 03B Application of Design Patterns, 10 Jul 2024. https://efundi.nwu.ac.za/access/content/group/4493dc23-83c1-4f78-aaa6-89a19cd28d5f/Slides/03B%20Application%20of%20Design%20Patterns.pptx Date of Access: 17 Aug. 2024.
+
+Naik, K. 2023. Design Patterns in C# .NET (2023). Design Patterns In C# .NET (2023) (c-sharpcorner.com) Date of Access: 18 Aug. 2024.
+OpenAI. (2024). ChatGPT [ChatGPT model]. https://chat.openai.com/ Date of Access: 18 Aug. 2024. 
+
+Soucoup, M .2022. Publish an ASP.NET Core web API to Azure API Management with Visual Studio. Publish an ASP.NET Core web API to Azure API Management with Visual Studio | Microsoft Learn Date of access: 18 Aug. 2024.
+
+Velayutham, M. 2012. Architectural Patterns in .NET. Architectural Patterns in .NET (c-sharpcorner.com) Date of Access: 18 Aug. 2024.
+
