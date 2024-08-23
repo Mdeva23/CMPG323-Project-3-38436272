@@ -1,12 +1,12 @@
-CMPG 323 Project 3 - 38436272
+# CMPG 323 Project 3 - 38436272
 
-Overview:
+# Overview:
 
 This project, part of the CMPG 323 course, enhances an existing web application by implementing architectural patterns, coding principles, and design patterns. The application manages CRUD (Create, Read, Update, Delete) functionality for project and client data.
 
 The solution leverages repository classes for data access, ensuring scalability, maintainability, and adherence to good software practices. The project is hosted on Microsoft Azure, utilizing cloud services for deployment and management.
 
-Prerequisites
+# Prerequisites
 Before working on this project, ensure the following tools and services are set up:
 
 Azure Access: Access to the NWU Azure tenant using your MS account.
@@ -46,7 +46,7 @@ Update the DefaultConnection string to match your SQL Server instance:
   "DefaultConnection": "Data Source=<your-server>;Initial Catalog=<your-database>;User ID=<your-username>;Password=<your-password>;Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"
 }
 
-Run the Application
+# Run the Application
 Press F5 in Visual Studio to build and run the application locally.
 Publish to Azure
 Use the Publish feature in Visual Studio:
@@ -54,7 +54,7 @@ Right-click on the project in Solution Explorer.
 Select "Publish".
 Choose "Azure" and follow the prompts to deploy the web app to your Azure App Service.
 
-Usage
+# Usage
 Web Interface
 Home Page: Navigate to the application's home page to view an overview of projects and clients.
 Manage Projects: Use the Projects menu to create, view, edit, or delete project entries.
