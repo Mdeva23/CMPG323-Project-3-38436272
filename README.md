@@ -1,5 +1,7 @@
 CMPG 323 Project 3 - 38436272
-Overview
+
+Overview:
+
 This project, part of the CMPG 323 course, enhances an existing web application by implementing architectural patterns, coding principles, and design patterns. The application manages CRUD (Create, Read, Update, Delete) functionality for project and client data.
 
 The solution leverages repository classes for data access, ensuring scalability, maintainability, and adherence to good software practices. The project is hosted on Microsoft Azure, utilizing cloud services for deployment and management.
@@ -11,7 +13,7 @@ Azure Access: Access to the NWU Azure tenant using your MS account.
 Azure Resource Group: A resource group in Azure with the appropriate naming convention.
 Development Environment: Visual Studio 2022 Community Edition installed with .NET 8.
 Code Base: The code base from the eFundi portal under "Projects > Project 3 Resources."
-Solution Structure
+Solution Structure.
 The project is organized into the following layers, following best practices:
 
 1. Data Access Layer
